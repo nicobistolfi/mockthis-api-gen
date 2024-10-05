@@ -1,0 +1,4 @@
+pyyaml
+python-dotenv
+langchain-anthropic
+markdown2

@@ -1,0 +1,30 @@
+service: aws-python-http-mock-api
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.8
+  lambdaHashingVersion: '20201221'
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - httpApi:
+          path: /
+          method: get
+      - httpApi:
+          path: /
+          method: post
+      - httpApi:
+          path: /
+          method: put
+      - httpApi:
+          path: /
+          method: patch
+      - httpApi:
+          path: /
+          method: delete
+      - httpApi:
+          path: /
+          method: options

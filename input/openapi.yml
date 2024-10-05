@@ -1,0 +1,445 @@
+openapi: 3.0.0
+info:
+  title: User Management API
+  description: A REST API for managing users and their subscriptions
+  version: 1.0.0
+
+security:
+  - bearerAuth: []
+
+paths:
+  /users:
+    get:
+      summary: List all users with pagination
+      parameters:
+        - name: page
+          in: query
+          description: Page number
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  pagination:
+                    type: object
+                    properties:
+                      totalItems:
+                        type: integer
+                      totalPages:
+                        type: integer
+                      currentPage:
+                        type: integer
+                      limit:
+                        type: integer
+              example:
+                data:
+                  - id: 1
+                    username: "john_doe"
+                    email: "john@example.com"
+                    createdAt: "2023-01-01T00:00:00Z"
+                    updatedAt: "2023-01-01T00:00:00Z"
+                  - id: 2
+                    username: "jane_doe"
+                    email: "jane@example.com"
+                    createdAt: "2023-01-02T00:00:00Z"
+                    updatedAt: "2023-01-02T00:00:00Z"
+                  - id: 3
+                    username: "bob_smith"
+                    email: "bob@example.com"
+                    createdAt: "2023-01-03T00:00:00Z"
+                    updatedAt: "2023-01-03T00:00:00Z"
+                  - id: 4
+                    username: "alice_johnson"
+                    email: "alice@example.com"
+                    createdAt: "2023-01-04T00:00:00Z"
+                    updatedAt: "2023-01-04T00:00:00Z"
+                  - id: 5
+                    username: "charlie_brown"
+                    email: "charlie@example.com"
+                    createdAt: "2023-01-05T00:00:00Z"
+                    updatedAt: "2023-01-05T00:00:00Z"
+                  - id: 6
+                    username: "diana_prince"
+                    email: "diana@example.com"
+                    createdAt: "2023-01-06T00:00:00Z"
+                    updatedAt: "2023-01-06T00:00:00Z"
+                  - id: 7
+                    username: "edward_stark"
+                    email: "edward@example.com"
+                    createdAt: "2023-01-07T00:00:00Z"
+                    updatedAt: "2023-01-07T00:00:00Z"
+                  - id: 8
+                    username: "fiona_gallagher"
+                    email: "fiona@example.com"
+                    createdAt: "2023-01-08T00:00:00Z"
+                    updatedAt: "2023-01-08T00:00:00Z"
+                  - id: 9
+                    username: "george_washington"
+                    email: "george@example.com"
+                    createdAt: "2023-01-09T00:00:00Z"
+                    updatedAt: "2023-01-09T00:00:00Z"
+                  - id: 10
+                    username: "hannah_montana"
+                    email: "hannah@example.com"
+                    createdAt: "2023-01-10T00:00:00Z"
+                    updatedAt: "2023-01-10T00:00:00Z"
+                  - id: 11
+                    username: "ian_gallagher"
+                    email: "ian@example.com"
+                    createdAt: "2023-01-11T00:00:00Z"
+                    updatedAt: "2023-01-11T00:00:00Z"
+                  - id: 12
+                    username: "jessica_jones"
+                    email: "jessica@example.com"
+                    createdAt: "2023-01-12T00:00:00Z"
+                    updatedAt: "2023-01-12T00:00:00Z"
+                  - id: 13
+                    username: "kevin_hart"
+                    email: "kevin@example.com"
+                    createdAt: "2023-01-13T00:00:00Z"
+                    updatedAt: "2023-01-13T00:00:00Z"
+                  - id: 14
+                    username: "lisa_simpson"
+                    email: "lisa@example.com"
+                    createdAt: "2023-01-14T00:00:00Z"
+                    updatedAt: "2023-01-14T00:00:00Z"
+                  - id: 15
+                    username: "michael_scott"
+                    email: "michael@example.com"
+                    createdAt: "2023-01-15T00:00:00Z"
+                    updatedAt: "2023-01-15T00:00:00Z"
+                  - id: 16
+                    username: "nancy_wheeler"
+                    email: "nancy@example.com"
+                    createdAt: "2023-01-16T00:00:00Z"
+                    updatedAt: "2023-01-16T00:00:00Z"
+                  - id: 17
+                    username: "oscar_martinez"
+                    email: "oscar@example.com"
+                    createdAt: "2023-01-17T00:00:00Z"
+                    updatedAt: "2023-01-17T00:00:00Z"
+                  - id: 18
+                    username: "pam_beesly"
+                    email: "pam@example.com"
+                    createdAt: "2023-01-18T00:00:00Z"
+                    updatedAt: "2023-01-18T00:00:00Z"
+                  - id: 19
+                    username: "quinn_fabray"
+                    email: "quinn@example.com"
+                    createdAt: "2023-01-19T00:00:00Z"
+                    updatedAt: "2023-01-19T00:00:00Z"
+                  - id: 20
+                    username: "rachel_green"
+                    email: "rachel@example.com"
+                    createdAt: "2023-01-20T00:00:00Z"
+                    updatedAt: "2023-01-20T00:00:00Z"
+                pagination:
+                  totalItems: 100
+                  totalPages: 5
+                  currentPage: 1
+                  limit: 20
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+    post:
+      summary:
+        |
+        Create a new user when the user is not already in the system either by username or email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUser'
+            example:
+              username: "new_user"
+              email: "newuser@example.com"
+              password: "securePassword123"
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/User'
+              example:
+                id: 3
+                username: "new_user"
+                email: "newuser@example.com"
+                createdAt: "2023-01-03T00:00:00Z"
+                updatedAt: "2023-01-03T00:00:00Z"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              example:
+                error: "Invalid input"
+                details: "Email is not in a valid format"
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        
+  /users/{userId}:
+    get:
+      summary: Get a user by ID, and mock up to 100 users, but only respond with a valid user when it's an odd user id.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/User'
+              example:
+                id: 1
+                username: "john_doe"
+                email: "john@example.com"
+                createdAt: "2023-01-01T00:00:00Z"
+                updatedAt: "2023-01-01T00:00:00Z"
+        '404':
+          description: User not found
+          content:
+            application/json:
+              example:
+                error: "Not Found"
+                message: "User with ID 1 not found"
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+          
+    put:
+      summary: Update a user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUser'
+            example:
+              username: "john_doe_updated"
+              email: "john_updated@example.com"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/User'
+              example:
+                id: 1
+                username: "john_doe_updated"
+                email: "john_updated@example.com"
+                createdAt: "2023-01-01T00:00:00Z"
+                updatedAt: "2023-01-03T00:00:00Z"
+        '404':
+          description: User not found
+          content:
+            application/json:
+              example:
+                error: "Not Found"
+                message: "User with ID 1 not found"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              example:
+                error: "Invalid input"
+                details: "Email is not in a valid format"
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+          
+    delete:
+      summary: Delete a user if the user exists
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Successful response
+        '404':
+          description: User not found
+          content:
+            application/json:
+              example:
+                error: "Not Found"
+                message: "User with ID 1 not found"
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /plans:
+    get:
+      summary: List all available plans
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Plan'
+              example:
+                - id: 1
+                  name: "Free"
+                  description: "Basic plan with limited features"
+                - id: 2
+                  name: "Premium"
+                  description: "Advanced plan with more features"
+                - id: 3
+                  name: "Enterprise"
+                  description: "Full-featured plan for large organizations"
+
+  /users/{userId}/subscription:
+    put:
+      summary: Update user's subscription plan
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSubscription'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        '400':
+          description: Bad Request
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: User not found
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+      content:
+        application/json:
+          example:
+            error: "Unauthorized"
+            message: "Invalid or missing access token"
+
+  schemas:
+    NewUser:
+      type: object
+      required:
+        - username
+        - email
+        - password
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+        
+    UpdateUser:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+        
+    Plan:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          enum: [Free, Premium, Enterprise]
+        description:
+          type: string
+
+    UpdateSubscription:
+      type: object
+      required:
+        - planId
+      properties:
+        planId:
+          type: integer
+
+    Subscription:
+      type: object
+      properties:
+        userId:
+          type: integer
+        planId:
+          type: integer
+        planName:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        subscription:
+          $ref: '#/components/schemas/Subscription'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time

@@ -6,6 +6,8 @@ This project is a Python script using Langchain that generates a dinamic mock AP
 
 Please not that the project is only a proof of concept and it is not intended to be used in production.
 
+_*For a comprehensive guide on how to generate a dynamic mock API [click here](https://nico.bistol.fi/blog/generative-ai-dynamic-mock-api)*_
+
 ## Requirements
 * The script requires Python 3.10 or higher.
 * NPM is used to install the dependencies for deployment with Serverless Framework.
@@ -44,3 +46,5 @@ pip install -r requirements.txt
 ```bash
 python3 main.py --input input/openapi.yml
 ```
+
+_*For a comprehensive guide on how to generate a dynamic mock API [click here](https://nico.bistol.fi/blog/generative-ai-dynamic-mock-api)*_
